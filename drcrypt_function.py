@@ -19,7 +19,7 @@ def decrypt_function(encrypted_parts):
         decrypted_parts_layer = []
 
         for part in parts:
-            decoded_part = base64.b64decode(part).decode('utf-8')  # فك التشفير باستخدام utf-8
+            decoded_part = base64.b64decode(part).decode()
             decrypted_part = xor_decrypt(decoded_part, key)
             decrypted_parts_layer.append(decrypted_part)
 
