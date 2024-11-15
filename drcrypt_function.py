@@ -1,25 +1,10 @@
-import requests, zlib, base64
-
-def fetch_decryption_function():
-    url = "https://raw.githubusercontent.com/username/repo/main/drcrypt_function.py"  # رابط الملف على GitHub
-    response = requests.get(url)
-    if response.status_code == 200:
-        exec(response.text, globals())  # تحميل الدالة إلى النطاق العام
-        print("Decryption function loaded successfully.")
-    else:
-        raise Exception("Failed to fetch decryption function from GitHub")
-
-# استدعاء دالة جلب دالة فك التشفير
-fetch_decryption_function()
-
-# الآن يمكنك استخدام decrypt_function بعد تحميلها
-try:
-    # على سبيل المثال، قم بتمرير البيانات المشفرة إلى decrypt_function
-    with open("encrypted_data.txt", "rb") as f:
-        encrypted_parts = eval(zlib.decompress(f.read()).decode())
-
-    original_code = decrypt_function(encrypted_parts)
-    print("Decrypted Code:")
-    print(original_code)
-except Exception as e:
-    print(f"Error during decryption: {e}")
+import base64 ,requests #line:1:import base64,requests
+def fetch_key ():OO0O0OOO0000O000O ='MTIzNDU2';O0OOOO0OOO00O0OOO =int (base64 .b64decode (OO0O0OOO0000O000O ).decode ());return O0OOOO0OOO00O0OOO #line:2:def fetch_key():A='MTIzNDU2';B=int(base64.b64decode(A).decode());return B
+def xor_decrypt (O00O000000O00OOOO ,O00OOO0O0O00O00OO ):return ''.join (chr (ord (O0OOOO0O0O00OOOO0 )^O00OOO0O0O00O00OO )for O0OOOO0O0O00OOOO0 in O00O000000O00OOOO )#line:3:def xor_decrypt(O00O00O0O000000OO,O000O0O0O00000000):return''.join(chr(ord(A)^O000O0O0O00000000)for A in O00O00O0O000000OO)
+def decrypt_function (O00OO00O0O00O000O ):#line:4:def decrypt_function(O00OO0O0O00OO0000):
+	O000O00000OOO00O0 =O00OO00O0O00O000O ;OOOOO000O0000OO0O =fetch_key ()#line:5:A=O00OO0O0O00OO0000;C=fetch_key()
+	for OO00OOOOOO0OO0OOO in range (3 ,0 ,-1 ):#line:6:for G in range(3,0,-1):
+		O0OO0OOOO00OOO0O0 =[]#line:7:B=[]
+		for O00O0OOOOO00OO0O0 in O000O00000OOO00O0 :O0O00OO00O0O00O0O =base64 .b64decode (O00O0OOOOO00OO0O0 ).decode ();O000OO000OO0OOO00 =xor_decrypt (O0O00OO00O0O00O0O ,OOOOO000O0000OO0O );O0OO0OOOO00OOO0O0 .append (O000OO000OO0OOO00 )#line:8:for D in A:E=base64.b64decode(D).decode();F=xor_decrypt(E,C);B.append(F)
+		O000O00000OOO00O0 =O0OO0OOOO00OOO0O0 #line:9:A=B
+	return ''.join (O000O00000OOO00O0 )
