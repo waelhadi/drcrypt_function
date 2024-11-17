@@ -1,29 +1,35 @@
-import base64, requests
+import base64
 
-def fetch_key():
-    # المفتاح المشفر
-    encrypted_key = "MTIzNDU2"  # المفتاح مشفر هنا باستخدام base64
-    # فك تشفير المفتاح عند الحاجة
-    key = int(base64.b64decode(encrypted_key).decode())
-    return key
+def fetch_key_from_github():
+    url = "https://raw.githubusercontent.com/waelhadi/art1/main/w1213.txt"
+    response = requests.get(url)
+    if response.status_code == 200:
+        key = int(response.text.strip())
+        print("Key fetched successfully:", key)
+        return key
+    else:
+        print(f"Failed to fetch key from GitHub. Status code: {response.status_code}")
+        raise Exception("Failed to fetch key from GitHub")
 
 def xor_decrypt(data, key):
     return ''.join(chr(ord(char) ^ key) for char in data)
 
 def decrypt_function(encrypted_parts):
-    parts = encrypted_parts
-    key = fetch_key()  # جلب المفتاح وفك تشفيره عند الحاجة
+    key = fetch_key_from_github()
+    decrypted_parts = []
 
-    # فك التشفير عبر الطبقات
-    for layer in range(3, 0, -1):  # بدءاً من الطبقة الأخيرة إلى الطبقة الأولى
-        decrypted_parts_layer = []
+    # Reverse the encryption layers
+    for layer in range(3, 0, -1):
+        print(f"Decrypting layer {layer}...")
+        decrypted_layer = []
 
-        for part in parts:
-            # فك الترميز مع معالجة الأحرف غير المدعومة
-            decoded_part = base64.b64decode(part).decode('utf-8', errors='replace')
+        for part in encrypted_parts:
+            decoded_part = base64.b64decode(part).decode()
             decrypted_part = xor_decrypt(decoded_part, key)
-            decrypted_parts_layer.append(decrypted_part)
+            decrypted_layer.append(decrypted_part)
 
-        parts = decrypted_parts_layer
+        encrypted_parts = decrypted_layer
 
-    return ''.join(parts)  # إرجاع الكود الأصلي كنص واحد
+    original_code = ''.join(encrypted_parts)
+    print("Decryption completed successfully.")
+    return original_code
